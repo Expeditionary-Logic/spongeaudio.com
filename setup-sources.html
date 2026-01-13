@@ -79,6 +79,26 @@
             </div>
             <p id="copy-feedback" class="copy-feedback"></p>
         </section>
+
+        <section class="content-card">
+            <h2>Manual URL Construction</h2>
+            <p style="margin-bottom: 1rem;">
+                You can also construct your own setup URL without using this form. The URL format is:
+            </p>
+            <code style="display: block; background: #f5f5f5; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; word-break: break-all;">
+                https://spongeaudio.com/add-source/audiobookshelf?url=...&amp;username=...&amp;password=...
+            </code>
+            <p style="margin-bottom: 1rem;"><strong>Parameters:</strong></p>
+            <ul style="color: #555; line-height: 1.8; margin-left: 1.5rem;">
+                <li><strong>url</strong> — Your server URL (e.g., <code>https://books.example.com</code>). Must be URL-encoded.</li>
+                <li><strong>username</strong> — Your username. Must be URL-encoded if it contains special characters.</li>
+                <li><strong>password</strong> — Your password in plaintext. Must be URL-encoded if it contains special characters.</li>
+                <li><strong>p</strong> — An obfuscated password. The form above uses this parameter instead of <code>password</code>.</li>
+            </ul>
+            <p style="margin-top: 1rem; color: #666;">
+                All parameters are optional. If you're constructing your own URL, we recommend using the <code>password</code> parameter with your plaintext password rather than trying to generate the obfuscated <code>p</code> parameter yourself.
+            </p>
+        </section>
     </main>
 
     <footer>
