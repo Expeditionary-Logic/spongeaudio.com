@@ -35,6 +35,7 @@
 
         <section class="content-card">
             <h2>Enter Your Server Details</h2>
+            <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem;">All fields are optional. Fill in what you'd like to pre-populate on your watch.</p>
             <form id="source-form" class="source-form">
                 <div class="form-group">
                     <label for="source-type">Source Type</label>
@@ -44,18 +45,22 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="server-url">Server URL</label>
-                    <input type="url" id="server-url" name="server-url" placeholder="https://your-server.com" required>
+                    <label for="server-url">Server URL <span style="font-weight: normal; color: #888;">(optional)</span></label>
+                    <input type="url" id="server-url" name="server-url" placeholder="https://your-server.com">
                 </div>
 
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" placeholder="your-username" required>
+                    <label for="username">Username <span style="font-weight: normal; color: #888;">(optional)</span></label>
+                    <input type="text" id="username" name="username" placeholder="your-username">
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="your-password" required>
+                    <label for="password">Password <span style="font-weight: normal; color: #888;">(optional)</span></label>
+                    <input type="password" id="password" name="password" placeholder="your-password">
+                    <p style="color: #888; font-size: 0.85rem; margin-top: 0.5rem;">
+                        <strong>Recommendation:</strong> Leave this blank and enter your password directly on your watch for better security.
+                        If included, the password is obfuscated but not encrypted.
+                    </p>
                 </div>
             </form>
         </section>
@@ -64,7 +69,7 @@
             <h2>Your Setup Link</h2>
             <p class="url-instructions">Send this link to yourself (via email, message, etc.) and open it on your Apple Watch to add the source to Sponge.</p>
             <div class="url-display">
-                <code id="generated-url">https://spongeaudio.com/add-source/audiobookshelf?url=&amp;username=&amp;password=</code>
+                <code id="generated-url">https://spongeaudio.com/add-source/audiobookshelf</code>
                 <button type="button" id="copy-button" class="copy-button" title="Copy to clipboard">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -85,6 +90,9 @@
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
+        // Pre-shared key for password obfuscation (XOR encoding)
+        const OBFUSCATION_KEY = 'ZetMxyZl8blT/cZSz2+wZeJ3KiUrQfQ0MQzeTMoK457aFC6Fk556q6esN7/Xzki5';
+
         const sourceType = document.getElementById('source-type');
         const serverUrl = document.getElementById('server-url');
         const username = document.getElementById('username');
@@ -93,13 +101,47 @@
         const copyButton = document.getElementById('copy-button');
         const copyFeedback = document.getElementById('copy-feedback');
 
+        // XOR a string with the key, return base64
+        function obfuscatePassword(plaintext) {
+            if (!plaintext) return '';
+
+            const keyBytes = new TextEncoder().encode(OBFUSCATION_KEY);
+            const plaintextBytes = new TextEncoder().encode(plaintext);
+            const result = new Uint8Array(plaintextBytes.length);
+
+            for (let i = 0; i < plaintextBytes.length; i++) {
+                result[i] = plaintextBytes[i] ^ keyBytes[i % keyBytes.length];
+            }
+
+            // Convert to base64
+            let binary = '';
+            for (let i = 0; i < result.length; i++) {
+                binary += String.fromCharCode(result[i]);
+            }
+            return btoa(binary);
+        }
+
         function updateGeneratedUrl() {
             const type = sourceType.value === 'abs' ? 'audiobookshelf' : sourceType.value;
-            const url = encodeURIComponent(serverUrl.value);
-            const user = encodeURIComponent(username.value);
-            const pass = encodeURIComponent(password.value);
+            const params = [];
 
-            generatedUrl.textContent = `https://spongeaudio.com/add-source/${type}?url=${url}&username=${user}&password=${pass}`;
+            if (serverUrl.value.trim()) {
+                params.push(`url=${encodeURIComponent(serverUrl.value.trim())}`);
+            }
+            if (username.value.trim()) {
+                params.push(`username=${encodeURIComponent(username.value.trim())}`);
+            }
+            if (password.value) {
+                const obfuscated = obfuscatePassword(password.value);
+                params.push(`p=${encodeURIComponent(obfuscated)}`);
+            }
+
+            let url = `https://spongeaudio.com/add-source/${type}`;
+            if (params.length > 0) {
+                url += '?' + params.join('&');
+            }
+
+            generatedUrl.textContent = url;
         }
 
         sourceType.addEventListener('change', updateGeneratedUrl);
