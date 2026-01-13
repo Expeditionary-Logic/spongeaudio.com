@@ -24,13 +24,17 @@
             <p class="subtitle">Generate a link to add audiobook sources to Sponge</p>
         </section>
 
-        <section class="setup-section">
-            <p class="setup-intro">
+        <section class="content-card">
+            <h2>How It Works</h2>
+            <p>
                 Use this form to generate a special link that will configure an audiobook source in Sponge on your Apple Watch.
                 <strong>This form runs entirely in your browser—no data is sent to any server.</strong>
                 Your credentials stay on your device.
             </p>
+        </section>
 
+        <section class="content-card">
+            <h2>Enter Your Server Details</h2>
             <form id="source-form" class="source-form">
                 <div class="form-group">
                     <label for="source-type">Source Type</label>
@@ -54,21 +58,21 @@
                     <input type="password" id="password" name="password" placeholder="your-password" required>
                 </div>
             </form>
+        </section>
 
-            <div class="generated-url-section">
-                <h3>Your Setup Link</h3>
-                <p class="url-instructions">Send this link to yourself (via email, message, etc.) and open it on your Apple Watch to add the source to Sponge.</p>
-                <div class="url-display">
-                    <code id="generated-url">https://spongeaudio.com/add-source/audiobookshelf?url=&amp;username=&amp;password=</code>
-                    <button type="button" id="copy-button" class="copy-button" title="Copy to clipboard">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>
-                    </button>
-                </div>
-                <p id="copy-feedback" class="copy-feedback"></p>
+        <section class="content-card">
+            <h2>Your Setup Link</h2>
+            <p class="url-instructions">Send this link to yourself (via email, message, etc.) and open it on your Apple Watch to add the source to Sponge.</p>
+            <div class="url-display">
+                <code id="generated-url">https://spongeaudio.com/add-source/audiobookshelf?url=&amp;username=&amp;password=</code>
+                <button type="button" id="copy-button" class="copy-button" title="Copy to clipboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </button>
             </div>
+            <p id="copy-feedback" class="copy-feedback"></p>
         </section>
     </main>
 

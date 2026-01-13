@@ -486,16 +486,16 @@ body.sponge-page {
     text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
-/* Instruction Sections */
-.instruction-section {
+/* Content Cards (white background sections) */
+.content-card {
     background-color: rgba(255, 255, 255, 0.95);
-    padding: 2.5rem 2rem;
+    padding: 2rem 2rem;
     margin: 1.5rem 0;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.instruction-section h2 {
+.content-card h2 {
     color: #2c3e50;
     margin-bottom: 1rem;
     font-size: 1.5rem;
@@ -503,29 +503,13 @@ body.sponge-page {
     padding-bottom: 0.5rem;
 }
 
-.instruction-section p {
+.content-card p {
     color: #555;
     font-size: 1.1rem;
     line-height: 1.8;
 }
 
-/* Setup Sources Page */
-.setup-section {
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 2.5rem 2rem;
-    margin: 1.5rem 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.setup-intro {
-    color: #555;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #ddd;
-}
+/* Setup Sources Form Styles */
 
 .source-form {
     max-width: 500px;
@@ -708,11 +692,11 @@ footer a:hover {
         font-size: 1rem;
     }
 
-    .instruction-section h2 {
+    .content-card h2 {
         font-size: 1.25rem;
     }
 
-    .setup-section {
+    .content-card {
         padding: 1.5rem 1rem;
     }
 
