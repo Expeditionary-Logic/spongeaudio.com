@@ -213,6 +213,18 @@ body.sponge-page {
     line-height: 1.6;
 }
 
+.use-case p a {
+    color: #ff7043;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.use-case p a:hover {
+    color: #ff5722;
+    text-decoration: underline;
+}
+
 /* Features Section */
 .features-section {
     background-color: rgba(255, 255, 255, 0.1);
@@ -621,6 +633,25 @@ body.sponge-page {
 
 .copy-feedback.error {
     color: #f44336;
+}
+
+/* Report Button */
+.report-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: #ff7043;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.report-button:hover {
+    background-color: #ff5722;
+    transform: scale(1.05);
 }
 
 /* Footer */
