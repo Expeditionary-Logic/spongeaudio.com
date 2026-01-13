@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup Sources - Sponge Audiobook Player</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="sponge-page">
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Sponge</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="instructions.html">Instructions</a></li>
+                <li><a href="setup-sources.html">Setup Sources</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section class="page-hero">
+            <h1>Setup Sources</h1>
+            <p class="subtitle">Generate a link to add audiobook sources to Sponge</p>
+        </section>
+
+        <section class="setup-section">
+            <p class="setup-intro">
+                Use this form to generate a special link that will configure an audiobook source in Sponge on your Apple Watch.
+                <strong>This form runs entirely in your browser—no data is sent to any server.</strong>
+                Your credentials stay on your device.
+            </p>
+
+            <form id="source-form" class="source-form">
+                <div class="form-group">
+                    <label for="source-type">Source Type</label>
+                    <select id="source-type" name="source-type">
+                        <option value="abs">AudiobookShelf</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="server-url">Server URL</label>
+                    <input type="url" id="server-url" name="server-url" placeholder="https://your-server.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="your-username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="your-password" required>
+                </div>
+            </form>
+
+            <div class="generated-url-section">
+                <h3>Your Setup Link</h3>
+                <p class="url-instructions">Send this link to yourself (via email, message, etc.) and open it on your Apple Watch to add the source to Sponge.</p>
+                <div class="url-display">
+                    <code id="generated-url">https://spongeaudio.com/add-source/audiobookshelf?url=&amp;username=&amp;password=</code>
+                    <button type="button" id="copy-button" class="copy-button" title="Copy to clipboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                </div>
+                <p id="copy-feedback" class="copy-feedback"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> <a href="https://expeditionarylogic.com">Expeditionary Logic, LLC</a></p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const sourceType = document.getElementById('source-type');
+        const serverUrl = document.getElementById('server-url');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const generatedUrl = document.getElementById('generated-url');
+        const copyButton = document.getElementById('copy-button');
+        const copyFeedback = document.getElementById('copy-feedback');
+
+        function updateGeneratedUrl() {
+            const type = sourceType.value === 'abs' ? 'audiobookshelf' : sourceType.value;
+            const url = encodeURIComponent(serverUrl.value);
+            const user = encodeURIComponent(username.value);
+            const pass = encodeURIComponent(password.value);
+
+            generatedUrl.textContent = `https://spongeaudio.com/add-source/${type}?url=${url}&username=${user}&password=${pass}`;
+        }
+
+        sourceType.addEventListener('change', updateGeneratedUrl);
+        serverUrl.addEventListener('input', updateGeneratedUrl);
+        username.addEventListener('input', updateGeneratedUrl);
+        password.addEventListener('input', updateGeneratedUrl);
+
+        copyButton.addEventListener('click', async function() {
+            const urlText = generatedUrl.textContent;
+
+            try {
+                await navigator.clipboard.writeText(urlText);
+                copyFeedback.textContent = 'Copied to clipboard!';
+                copyFeedback.classList.add('show');
+
+                setTimeout(() => {
+                    copyFeedback.classList.remove('show');
+                }, 2000);
+            } catch (err) {
+                copyFeedback.textContent = 'Failed to copy. Please select and copy manually.';
+                copyFeedback.classList.add('show', 'error');
+
+                setTimeout(() => {
+                    copyFeedback.classList.remove('show', 'error');
+                }, 3000);
+            }
+        });
+
+        // Initialize
+        updateGeneratedUrl();
+    </script>
+</body>
+</html>
