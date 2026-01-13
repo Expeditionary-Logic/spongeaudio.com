@@ -60,5 +60,13 @@
     <a href="https://apps.apple.com/us/app/sponge-audiobooks/id6755274146">
         <img src="/images/app-store-badge.svg" alt="Download on the App Store" class="app-store-badge">
     </a>
+
+    <script>
+        // If query parameters are present (used by the app via Universal Links),
+        // reload the page without them to clean up the URL
+        if (window.location.search) {
+            window.location.replace(window.location.pathname);
+        }
+    </script>
 </body>
 </html>
